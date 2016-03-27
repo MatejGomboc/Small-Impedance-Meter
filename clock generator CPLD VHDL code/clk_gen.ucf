@@ -1,0 +1,10 @@
+NET "clk"  LOC = "p43"  ; #MCLK
+
+NET "sck"  LOC = "p20"  ; #SCK
+NET "data"  LOC = "p21"  ; #MOSI
+NET "cs_n"  LOC = "p22"  ; #SS*
+
+NET "output"  LOC = "p34"  ; #MCLK_DIV
+
+NET "clk" TNM_NET = clk;
+TIMESPEC ts_clk = PERIOD "clk" 62.5 ns HIGH 50%;
