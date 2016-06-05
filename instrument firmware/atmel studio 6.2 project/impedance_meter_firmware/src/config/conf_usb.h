@@ -62,9 +62,9 @@
 // (USB_CONFIG_ATTR_BUS_POWERED)
 
 //! USB Device string definitions (Optional)
-#define  USB_DEVICE_MANUFACTURE_NAME      "Matej Gomboc"//"ATMEL ASF"
-#define  USB_DEVICE_PRODUCT_NAME          "Small Impedance Meter"//"Vendor Class Example"
-#define  USB_DEVICE_SERIAL_NAME           "123123123123"
+#define  USB_DEVICE_MANUFACTURE_NAME      "Matej Gomboc"
+#define  USB_DEVICE_PRODUCT_NAME          "Small Impedance Meter"
+#define  USB_DEVICE_SERIAL_NAME           "1.0"
 
 /**
  * USB Device Callbacks definitions (Optional)
