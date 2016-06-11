@@ -1,0 +1,6 @@
+C:\Users\user\Desktop\Small-Impedance-Meter\PC user interface\impedance_meter_CLI\impedance_meter_CLI\bin\Release\impedance_meter_CLI.exe
+C:\Users\user\Desktop\Small-Impedance-Meter\PC user interface\impedance_meter_CLI\impedance_meter_CLI\bin\Release\impedance_meter_CLI.pdb
+C:\Users\user\Desktop\Small-Impedance-Meter\PC user interface\impedance_meter_CLI\impedance_meter_CLI\bin\Release\LibUsbDotNet.dll
+C:\Users\user\Desktop\Small-Impedance-Meter\PC user interface\impedance_meter_CLI\impedance_meter_CLI\bin\Release\LibUsbDotNet.xml
+C:\Users\user\Desktop\Small-Impedance-Meter\PC user interface\impedance_meter_CLI\impedance_meter_CLI\obj\x86\Release\impedance_meter_CLI.exe
+C:\Users\user\Desktop\Small-Impedance-Meter\PC user interface\impedance_meter_CLI\impedance_meter_CLI\obj\x86\Release\impedance_meter_CLI.pdb
