@@ -111,6 +111,9 @@ void spi_master_setup_device(SPI_t *spi, struct spi_device *device,
 	/* Clear any set SPI mode flags and set them to the user-specified mode */
 	spi->CTRL = (spi->CTRL & ~SPI_MODE_gm) |
 			((flags << SPI_MODE_gp) & SPI_MODE_gm);
+			
+	/* Set to MSB first mode */		
+	spi->CTRL &= ~(1 << SPI_DORD_bp);
 }
 
 /**

@@ -2,11 +2,19 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\AD5933.c
+
 src\ASF\common\services\usb\class\vendor\device\udi_vendor.c
 
 src\ASF\common\services\usb\udc\udc.c
 
+src\ASF\xmega\drivers\twi\twim.c
+
+src\ASF\xmega\drivers\twi\twis.c
+
 src\ASF\xmega\drivers\usb\usb_device.c
+
+src\clock_divider.c
 
 src\init.c
 

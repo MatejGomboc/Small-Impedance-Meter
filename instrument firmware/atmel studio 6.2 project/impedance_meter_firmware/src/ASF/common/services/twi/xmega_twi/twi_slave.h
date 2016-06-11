@@ -1,9 +1,13 @@
-/**
+/*****************************************************************************
+ *
  * \file
  *
- * \brief User Interface
+ * \brief TWI Slave driver for AVR XMEGA.
  *
- * Copyright (c) 2011 - 2012 Atmel Corporation. All rights reserved.
+ * This file defines a useful set of functions for the TWI interface on AVR Xmega
+ * devices.
+ *
+ * Copyright (c) 2009-2012 Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -39,60 +43,33 @@
  *
  * \asf_license_stop
  *
- */
+ ******************************************************************************/
 
-#include <asf.h>
-#include "led.h"
-#include "ui.h"
 
-void ui_init(void)
+#ifndef _TWI_SLAVE_H_
+#define _TWI_SLAVE_H_
+
+#include "compiler.h"
+#include "sysclk.h"
+#include "status_codes.h"
+#include "twis.h"
+
+typedef TWI_t *twi_slave_t;
+typedef twi_options_t twi_slave_options_t;
+
+static inline void twi_slave_setup(twi_slave_t twi,
+		twi_slave_options_t *opt, TWI_Slave_t *twiSlave,
+		void (*processDataFunction) (void), uint8_t address,
+		TWI_SLAVE_INTLVL_t intLevel)
 {
-	LED_On(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
+	opt->speed_reg = TWI_BAUD(sysclk_get_cpu_hz(),opt->speed);
+
+	sysclk_enable_peripheral_clock(twi);
+
+	TWI_SlaveInitializeDriver(twiSlave, twi, processDataFunction);
+	TWI_SlaveInitializeModule(twiSlave, address, intLevel);
 }
 
-void ui_powerdown(void)
-{
-	LED_Off(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
-}
-
-void ui_wakeup(void)
-{
-	LED_On(LED0_USB);
-}
-
-void ui_connection_state(bool b_started)
-{
-	if (b_started) {
-		LED_On(LED2_USB);
-	}else{
-		LED_Off(LED2_USB);
-	}
-}
-
-void ui_process(uint16_t framenumber)
-{
-	if ((framenumber % 1000) == 0) {
-		LED_On(LED1_USB);
-	}
-	if ((framenumber % 1000) == 500) {
-		LED_Off(LED1_USB);
-	}
-}
+#endif  // _TWI_SLAVE_H_
 
 
-/**
- * \defgroup UI User Interface
- *
- * Human interface on STK600:
- * - Led 0 is on when USB line is in IDLE mode, and off in SUSPEND mode
- * - Led 1 blinks when USB host has checked and enabled vendor interface
- * - Led 2 is on when loopback is running
- *
- * Setup for STK600:
- * - LEDS connector is connected to PORTE
- * - SWITCHES are connected to PORTF
- */

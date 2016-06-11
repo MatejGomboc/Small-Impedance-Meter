@@ -1,9 +1,13 @@
-/**
+/*****************************************************************************
+ *
  * \file
  *
- * \brief User Interface
+ * \brief TWI Master driver for AVR Xmega.
  *
- * Copyright (c) 2011 - 2012 Atmel Corporation. All rights reserved.
+ * This file defines a useful set of functions for the TWI interface on AVR Xmega
+ * devices.
+ *
+ * Copyright (c) 2009-2012 Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -39,60 +43,25 @@
  *
  * \asf_license_stop
  *
- */
+ ******************************************************************************/
 
-#include <asf.h>
-#include "led.h"
-#include "ui.h"
 
-void ui_init(void)
+#ifndef _TWI_MASTER_H_
+#define _TWI_MASTER_H_
+
+#include "sysclk.h"
+#include "twim.h"
+
+typedef TWI_t *twi_master_t;
+typedef twi_options_t twi_master_options_t;
+
+static inline int twi_master_setup(twi_master_t twi, twi_master_options_t *opt)
 {
-	LED_On(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
+	opt->speed_reg = TWI_BAUD(sysclk_get_cpu_hz(),opt->speed);
+
+	sysclk_enable_peripheral_clock(twi);
+
+	return twi_master_init(twi,opt);
 }
 
-void ui_powerdown(void)
-{
-	LED_Off(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
-}
-
-void ui_wakeup(void)
-{
-	LED_On(LED0_USB);
-}
-
-void ui_connection_state(bool b_started)
-{
-	if (b_started) {
-		LED_On(LED2_USB);
-	}else{
-		LED_Off(LED2_USB);
-	}
-}
-
-void ui_process(uint16_t framenumber)
-{
-	if ((framenumber % 1000) == 0) {
-		LED_On(LED1_USB);
-	}
-	if ((framenumber % 1000) == 500) {
-		LED_Off(LED1_USB);
-	}
-}
-
-
-/**
- * \defgroup UI User Interface
- *
- * Human interface on STK600:
- * - Led 0 is on when USB line is in IDLE mode, and off in SUSPEND mode
- * - Led 1 blinks when USB host has checked and enabled vendor interface
- * - Led 2 is on when loopback is running
- *
- * Setup for STK600:
- * - LEDS connector is connected to PORTE
- * - SWITCHES are connected to PORTF
- */
+#endif  // _TWI_MASTER_H_

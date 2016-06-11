@@ -48,9 +48,9 @@
  * PORTE connector to the LEDs connector.
  */
 //! @{
-# define LED0_GPIO   IOPORT_CREATE_PIN(PORTA,4) // RED
-# define LED1_GPIO   IOPORT_CREATE_PIN(PORTA,3) // GREEN
-# define LED2_GPIO   IOPORT_CREATE_PIN(PORTA,2) // BLUE
+# define LED0_USB   IOPORT_CREATE_PIN(PORTA,4) // RED
+# define LED1_USB   IOPORT_CREATE_PIN(PORTA,3) // GREEN
+# define LED2_USB   IOPORT_CREATE_PIN(PORTA,2) // BLUE
 //! @}
 
 /*! \name SPI Connections of the clock generator. To use these defines,
@@ -75,7 +75,7 @@
  */
 //@{
 #define BOARD_XOSC_HZ          16000000
-#define BOARD_XOSC_TYPE        XOSC_TYPE_XTAL //XOSC_TYPE_EXTERNAL
+#define BOARD_XOSC_TYPE        XOSC_TYPE_XTAL
 #define BOARD_XOSC_STARTUP_US  50
 //@}
 

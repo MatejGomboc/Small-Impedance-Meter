@@ -1,9 +1,9 @@
 /**
  * \file
  *
- * \brief User Interface
+ * \brief TWIM Configuration File for AVR XMEGA.
  *
- * Copyright (c) 2011 - 2012 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2011 Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -40,59 +40,17 @@
  * \asf_license_stop
  *
  */
+#ifndef _CONF_TWIM_H_
+#define _CONF_TWIM_H_
 
-#include <asf.h>
-#include "led.h"
-#include "ui.h"
-
-void ui_init(void)
-{
-	LED_On(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
-}
-
-void ui_powerdown(void)
-{
-	LED_Off(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
-}
-
-void ui_wakeup(void)
-{
-	LED_On(LED0_USB);
-}
-
-void ui_connection_state(bool b_started)
-{
-	if (b_started) {
-		LED_On(LED2_USB);
-	}else{
-		LED_Off(LED2_USB);
-	}
-}
-
-void ui_process(uint16_t framenumber)
-{
-	if ((framenumber % 1000) == 0) {
-		LED_On(LED1_USB);
-	}
-	if ((framenumber % 1000) == 500) {
-		LED_Off(LED1_USB);
-	}
-}
-
-
-/**
- * \defgroup UI User Interface
- *
- * Human interface on STK600:
- * - Led 0 is on when USB line is in IDLE mode, and off in SUSPEND mode
- * - Led 1 blinks when USB host has checked and enabled vendor interface
- * - Led 2 is on when loopback is running
- *
- * Setup for STK600:
- * - LEDS connector is connected to PORTE
- * - SWITCHES are connected to PORTF
+/*! \name Configuration
  */
+//! @{
+//SDA is on PC0, SCL is on PC1
+#define TWI_AD5933             &TWIC
+#define CONF_TWIM_INTLVL       TWI_MASTER_INTLVL_MED_gc
+#define CONF_PMIC_INTLVL       PMIC_MEDLVLEN_bm
+#define TWI_SPEED              400000 //!< TWI data transfer rate
+//! @}
+
+#endif // _CONF_TWIM_H_

@@ -1001,7 +1001,7 @@ static inline void nvm_lb_lock_bits_write(enum NVM_LB_enum lb_lock)
 	 fuse_value = nvm_fuses_read(FUSEBYTE5);
 
 	 if ((fuse_value & NVM_FUSES_BODLVL_gm) == BODLVL_2V1_gc) {
-	     gpio_set_pin_low(LED0_GPIO);
+	     gpio_set_pin_low(LED0_USB);
 	 }
 \endcode
  *
@@ -1021,7 +1021,7 @@ static inline void nvm_lb_lock_bits_write(enum NVM_LB_enum lb_lock)
  *    BOD-level is correct, and if it is, light up an LED:
  *     - \code
 	if ((fuse_value & NVM_FUSES_BODLVL_gm) == BODLVL_2V1_gc) {
-	    gpio_set_pin_low(LED0_GPIO);
+	    gpio_set_pin_low(LED0_USB);
 	}
 \endcode
  *

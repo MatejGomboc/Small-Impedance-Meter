@@ -52,6 +52,15 @@ src/ui.d src/ui.o: ../src/ui.c ../src/asf.h \
  ../src/ASF/common/services/clock/xmega/osc.h \
  ../src/ASF/common/services/clock/pll.h \
  ../src/ASF/common/services/clock/xmega/pll.h \
+ ../src/ASF/common/services/twi/twi_master.h \
+ ../src/ASF/common/services/twi/xmega_twi/twi_master.h \
+ ../src/ASF/xmega/drivers/twi/twim.h ../src/config/conf_twim.h \
+ ../src/ASF/xmega/drivers/twi/twi_common.h \
+ ../src/ASF/common/services/twi/twi_slave.h \
+ ../src/ASF/common/services/twi/xmega_twi/twi_slave.h \
+ ../src/ASF/xmega/drivers/twi/twis.h \
+ ../src/ASF/common/services/twi/xmega_twi/twi_master.h \
+ ../src/ASF/common/services/twi/xmega_twi/twi_slave.h \
  ../src/ASF/common/services/usb/udc/udc.h ../src/config/conf_usb.h \
  ../src/ASF/common/services/usb/class/vendor/device/udi_vendor_conf.h \
  ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.h \
@@ -186,6 +195,26 @@ d:\program\ files\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-tool
 ../src/ASF/common/services/clock/pll.h:
 
 ../src/ASF/common/services/clock/xmega/pll.h:
+
+../src/ASF/common/services/twi/twi_master.h:
+
+../src/ASF/common/services/twi/xmega_twi/twi_master.h:
+
+../src/ASF/xmega/drivers/twi/twim.h:
+
+../src/config/conf_twim.h:
+
+../src/ASF/xmega/drivers/twi/twi_common.h:
+
+../src/ASF/common/services/twi/twi_slave.h:
+
+../src/ASF/common/services/twi/xmega_twi/twi_slave.h:
+
+../src/ASF/xmega/drivers/twi/twis.h:
+
+../src/ASF/common/services/twi/xmega_twi/twi_master.h:
+
+../src/ASF/common/services/twi/xmega_twi/twi_slave.h:
 
 ../src/ASF/common/services/usb/udc/udc.h:
 

@@ -48,6 +48,7 @@
 #include <asf.h>
 #include "conf_usb.h"
 #include "ui.h"
+#include "clock_divider.h"
 
 static volatile bool main_b_vendor_enable = false;
 
@@ -75,6 +76,7 @@ int main(void)
 	sysclk_init();
 	board_init();
 	ui_init();
+	clk_gen_init();
 
 	// Start USB stack to authorize VBus monitoring
 	udc_start();

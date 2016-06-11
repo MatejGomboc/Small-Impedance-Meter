@@ -94,6 +94,16 @@
 // From module: System Clock Control - XMEGA A1U/A3U/A3BU/A4U/B/C implementation
 #include <sysclk.h>
 
+// From module: TWI - Two-Wire Interface - XMEGA implementation
+#include <twi_master.h>
+#include <twi_slave.h>
+#include <xmega_twi/twi_master.h>
+#include <xmega_twi/twi_slave.h>
+
+// From module: TWI - Two-wire Master and Slave Interface
+#include <twim.h>
+#include <twis.h>
+
 // From module: USB Device Stack Core (Common API)
 #include <udc.h>
 #include <udd.h>
