@@ -19,6 +19,7 @@ void clk_gen_init(void)
 	spi_master_init(CLK_GEN_SPI);
 	spi_master_setup_device(CLK_GEN_SPI, &SPI_CLK_GEN, SPI_MODE_0, CLK_GEN_SPI_BAUDRATE, 0);
 	spi_enable(CLK_GEN_SPI);
+	clk_gen_set(0x00);
 }
 
 void clk_gen_set(uint8_t setting)

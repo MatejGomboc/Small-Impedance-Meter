@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using small_impedance_meter;
 
@@ -9,10 +10,10 @@ namespace impedance_meter_CLI
 {
     internal class Program
     {
+        private static SmallImpedanceMeter smallImpedanceMeter = new SmallImpedanceMeter();
 
         private static void Main(string[] args)
         {
-            SmallImpedanceMeter smallImpedanceMeter = new SmallImpedanceMeter();
             smallImpedanceMeter.OnDeviceAttached += OnDeviceAttached;
             smallImpedanceMeter.OnDeviceRemoved += OnDeviceRemoved;
 
@@ -20,8 +21,12 @@ namespace impedance_meter_CLI
 
             while (!Console.KeyAvailable) Application.DoEvents();
 
+            smallImpedanceMeter.Disconnect();
+
             smallImpedanceMeter.OnDeviceAttached -= OnDeviceAttached;
             smallImpedanceMeter.OnDeviceRemoved -= OnDeviceRemoved;
+
+            Console.WriteLine("Device Disconnected.");
         }
 
         private static void OnDeviceAttached(object sender, EventArgs e)

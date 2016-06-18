@@ -49,14 +49,15 @@
 #include "conf_usb.h"
 #include "ui.h"
 #include "clock_divider.h"
+#include "AD5933.h"
 
 static volatile bool main_b_vendor_enable = false;
 
 /**
- * \name Buffer for communication
+ * \name Buffer for communication.
  */
 //@{
-//! Size of buffer used for communication
+//! Size of buffer used for communication.
 #define  MAIN_BUFFER_SIZE    1024
 COMPILER_WORD_ALIGNED static uint8_t main_buffer[MAIN_BUFFER_SIZE];
 //@}
@@ -77,6 +78,8 @@ int main(void)
 	board_init();
 	ui_init();
 	clk_gen_init();
+	AD5933_init();
+	switch_to_measure();
 
 	// Start USB stack to authorize VBus monitoring
 	udc_start();
@@ -109,16 +112,16 @@ void main_sof_action(void)
 bool main_vendor_enable(void)
 {
 	main_b_vendor_enable = true;
+	ui_init();
 	// Start data reception on OUT endpoints
-	#if UDI_VENDOR_EPS_SIZE_BULK_FS
 	main_vendor_bulk_in_received(UDD_EP_TRANSFER_OK, 0, 0);
-	#endif
 	return true;
 }
 
 void main_vendor_disable(void)
 {
 	main_b_vendor_enable = false;
+	ui_init();
 }
 
 bool main_setup_out_received(void)
@@ -137,7 +140,6 @@ bool main_setup_in_received(void)
 	return true;
 }
 
-#if UDI_VENDOR_EPS_SIZE_BULK_FS
 void main_vendor_bulk_in_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep)
 {
 	UNUSED(nb_transfered);
@@ -162,4 +164,3 @@ void main_vendor_bulk_out_received(udd_ep_status_t status, iram_size_t nb_transf
 	// Send on IN endpoint the data received on endpoint OUT
 	udi_vendor_bulk_in_run(main_buffer, nb_transfered, main_vendor_bulk_in_received);
 }
-#endif

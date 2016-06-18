@@ -44,16 +44,21 @@
 #ifndef CONF_BOARD_H_INCLUDED
 #define CONF_BOARD_H_INCLUDED
 
-/*! \name GPIO Connections of LEDs. To use these defines, connect the STK600
- * PORTE connector to the LEDs connector.
+/*! \name GPIO connections of LEDs.
  */
 //! @{
-# define LED0_USB   IOPORT_CREATE_PIN(PORTA,4) // RED
-# define LED1_USB   IOPORT_CREATE_PIN(PORTA,3) // GREEN
-# define LED2_USB   IOPORT_CREATE_PIN(PORTA,2) // BLUE
+# define LED_USB_RED   IOPORT_CREATE_PIN(PORTA,4) // RED
+# define LED_USB_GREEN   IOPORT_CREATE_PIN(PORTA,3) // GREEN
+# define LED_USB_BLUE   IOPORT_CREATE_PIN(PORTA,2) // BLUE
 //! @}
 
-/*! \name SPI Connections of the clock generator. To use these defines,
+/*! \name GPIO connection of Measure/Calibrate switch.
+ */
+//! @{
+# define SWT_CAL_nMES   IOPORT_CREATE_PIN(PORTC,2) // If 0 = Measure, if 1 = Calibration.
+//! @}
+
+/*! \name SPI connections of the clock generator. To use these defines,
  * connect :
  * - PC4 to /CS
  * - PC7 to SCK
@@ -68,7 +73,6 @@
 #define CLK_GEN_MASTER_MOSI   IOPORT_CREATE_PIN(PORTC,5)  // MOSI as output
 #define CLK_GEN_MASTER_MISO   IOPORT_CREATE_PIN(PORTC,6)  // MISO as input
 #define CLK_GEN_SPI_CLK_MASK  SYSCLK_PORT_C
-
 //! @}
 
 /*! \name External oscillator

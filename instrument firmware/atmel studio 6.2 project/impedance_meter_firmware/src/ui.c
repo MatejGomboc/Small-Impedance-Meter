@@ -47,39 +47,43 @@
 
 void ui_init(void)
 {
-	LED_On(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
+	LED_On(LED_USB_RED);
+	LED_Off(LED_USB_GREEN);
+	LED_Off(LED_USB_BLUE);
 }
 
 void ui_powerdown(void)
 {
-	LED_Off(LED0_USB);
-	LED_Off(LED1_USB);
-	LED_Off(LED2_USB);
+	LED_Off(LED_USB_RED);
+	LED_Off(LED_USB_GREEN);
+	LED_Off(LED_USB_BLUE);
 }
 
 void ui_wakeup(void)
 {
-	LED_On(LED0_USB);
+	LED_On(LED_USB_RED);
 }
 
 void ui_connection_state(bool b_started)
 {
-	if (b_started) {
-		LED_On(LED2_USB);
-	}else{
-		LED_Off(LED2_USB);
+	if (b_started)
+	{
+		LED_On(LED_USB_BLUE);
+	}else
+	{
+		LED_Off(LED_USB_BLUE);
 	}
 }
 
 void ui_process(uint16_t framenumber)
 {
-	if ((framenumber % 1000) == 0) {
-		LED_On(LED1_USB);
+	if ((framenumber % 1000) == 0)
+	{
+		LED_On(LED_USB_GREEN);
 	}
-	if ((framenumber % 1000) == 500) {
-		LED_Off(LED1_USB);
+	if ((framenumber % 1000) == 500)
+	{
+		LED_Off(LED_USB_GREEN);
 	}
 }
 
@@ -88,11 +92,7 @@ void ui_process(uint16_t framenumber)
  * \defgroup UI User Interface
  *
  * Human interface on STK600:
- * - Led 0 is on when USB line is in IDLE mode, and off in SUSPEND mode
- * - Led 1 blinks when USB host has checked and enabled vendor interface
- * - Led 2 is on when loopback is running
- *
- * Setup for STK600:
- * - LEDS connector is connected to PORTE
- * - SWITCHES are connected to PORTF
+ * - Led RED is on when USB line is in IDLE mode, and off in SUSPEND mode
+ * - Led GREEN blinks when USB host has checked and enabled vendor interface
+ * - Led BLUE is on when loopback is running
  */

@@ -50,7 +50,7 @@
 #define TWI_AD5933             &TWIC
 #define CONF_TWIM_INTLVL       TWI_MASTER_INTLVL_MED_gc
 #define CONF_PMIC_INTLVL       PMIC_MEDLVLEN_bm
-#define TWI_SPEED              400000 //!< TWI data transfer rate
+#define TWI_SPEED              50000 //!< TWI data transfer rate
 //! @}
 
 #endif // _CONF_TWIM_H_

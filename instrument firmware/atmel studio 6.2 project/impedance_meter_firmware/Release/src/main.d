@@ -74,7 +74,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/common/services/usb/udc/udi.h ../src/ui.h ../src/main.h \
  ../src/ASF/common/services/usb/udc/udd.h \
  ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.h \
- ../src/ui.h ../src/clock_divider.h
+ ../src/ui.h ../src/clock_divider.h ../src/AD5933.h
 
 ../src/asf.h:
 
@@ -251,3 +251,5 @@ d:\program\ files\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-tool
 ../src/ui.h:
 
 ../src/clock_divider.h:
+
+../src/AD5933.h:
