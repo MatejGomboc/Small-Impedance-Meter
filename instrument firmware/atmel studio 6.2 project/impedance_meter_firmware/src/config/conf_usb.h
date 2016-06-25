@@ -111,5 +111,6 @@
 #include "udi_vendor_conf.h"
 #include "ui.h"
 #include "main.h"
+#include "usb_control.h"
 
 #endif // _CONF_USB_H_

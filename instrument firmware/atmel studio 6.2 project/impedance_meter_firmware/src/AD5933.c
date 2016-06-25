@@ -32,7 +32,6 @@ void AD5933_init(void)
 	opt.chip  = TWI_AD5933_BUS_ADDR;
 	
 	// Initialize the TWI master driver.
-
 	twi_master_setup(TWI_AD5933, &opt);
 }
 
@@ -48,11 +47,12 @@ bool AD5933_reg_write(uint8_t reg_addr, uint8_t reg_data)
 		.length       = 1                     // transfer data size (bytes)
 	};
 
-	status_code_t status = OPERATION_IN_PROGRESS;
+	status_code_t status;
 	// Perform write then check the result.
 	do
 	{
 		status = twi_master_write(TWI_AD5933, &packet_sent);
+		if(status == ERR_INVALID_ARG) return false;
 	}
 	while (status != TWI_SUCCESS);
 	

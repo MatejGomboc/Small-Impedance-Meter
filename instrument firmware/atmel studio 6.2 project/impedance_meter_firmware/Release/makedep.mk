@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\usb_control.c
+
 src\AD5933.c
 
 src\ASF\common\services\usb\class\vendor\device\udi_vendor.c

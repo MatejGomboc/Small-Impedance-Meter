@@ -17,9 +17,20 @@ namespace impedance_meter_CLI
             smallImpedanceMeter.OnDeviceAttached += OnDeviceAttached;
             smallImpedanceMeter.OnDeviceRemoved += OnDeviceRemoved;
 
-            Console.WriteLine("Waiting for device ...");
+            try
+            {
+                smallImpedanceMeter.Connect();
+            }
+            catch (Exception) 
+            {
+                Console.WriteLine("Waiting for device ...");
+            }
 
             while (!Console.KeyAvailable) Application.DoEvents();
+
+            smallImpedanceMeter.Ping();
+            smallImpedanceMeter.Powerdown();
+            smallImpedanceMeter.SetClockDivider(0x00);
 
             smallImpedanceMeter.Disconnect();
 
@@ -27,6 +38,8 @@ namespace impedance_meter_CLI
             smallImpedanceMeter.OnDeviceRemoved -= OnDeviceRemoved;
 
             Console.WriteLine("Device Disconnected.");
+
+            Thread.Sleep(2000);
         }
 
         private static void OnDeviceAttached(object sender, EventArgs e)

@@ -62,9 +62,6 @@ static volatile bool main_b_vendor_enable = false;
 COMPILER_WORD_ALIGNED static uint8_t main_buffer[MAIN_BUFFER_SIZE];
 //@}
 
-void main_vendor_bulk_in_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep);
-void main_vendor_bulk_out_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep);
-
 /*! \brief Main function. Execution starts here.
  */
 int main(void)
@@ -122,22 +119,6 @@ void main_vendor_disable(void)
 {
 	main_b_vendor_enable = false;
 	ui_init();
-}
-
-bool main_setup_out_received(void)
-{
-	ui_connection_state(true);
-	udd_g_ctrlreq.payload = main_buffer;
-	udd_g_ctrlreq.payload_size = min(udd_g_ctrlreq.req.wLength, sizeof(main_buffer));
-	return true;
-}
-
-bool main_setup_in_received(void)
-{
-	ui_connection_state(false);
-	udd_g_ctrlreq.payload = main_buffer;
-	udd_g_ctrlreq.payload_size = min(udd_g_ctrlreq.req.wLength, sizeof(main_buffer));
-	return true;
 }
 
 void main_vendor_bulk_in_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep)

@@ -22,6 +22,49 @@ namespace small_impedance_meter
         private const byte USB_DIR_IN = 0x80;
         private const byte USB_DIR_OUT = 0x00;
 
+        public void SendRawControl(byte bRequest, byte[] bufferSent)
+        {
+            if (!connected) throw (new Exception("Device disconnected."));
+
+            int bytesSent = 0;
+            UsbSetupPacket setup_out = new UsbSetupPacket((byte)(USB_TYPE_VENDOR | USB_RECIP_INTERFACE | USB_DIR_OUT), bRequest, 0, 0, (short)bufferSent.Length);
+            bool result = device.ControlTransfer(ref setup_out, bufferSent, bufferSent.Length, out bytesSent);
+
+            if (result == false) throw (new Exception("Error while sending raw request."));
+            if (bytesSent != bufferSent.Length) throw (new Exception("Invalid number of bytes sent: " + bytesSent.ToString() + "."));
+        }
+
+        public void SendAndReceiveRawControl(byte bRequest, byte[] bufferSent, ref byte[] bufferReceived)
+        {
+            if (!connected) throw (new Exception("Device disconnected."));
+
+            int bytesSent = 0;
+            UsbSetupPacket setup_out = new UsbSetupPacket((byte)(USB_TYPE_VENDOR | USB_RECIP_INTERFACE | USB_DIR_OUT), bRequest, 0, 0, (short)bufferSent.Length);
+            bool result = device.ControlTransfer(ref setup_out, bufferSent, bufferSent.Length, out bytesSent);
+
+            if (result == false) throw (new Exception("Error while sending raw request."));
+            if (bytesSent != bufferSent.Length) throw (new Exception("Invalid number of bytes sent: " + bytesSent.ToString() + "."));
+
+            int bytesReceived = 0;
+            UsbSetupPacket setup_in = new UsbSetupPacket((byte)(USB_TYPE_VENDOR | USB_RECIP_INTERFACE | USB_DIR_IN), bRequest, 0, 0, (short)bufferReceived.Length);
+            result = device.ControlTransfer(ref setup_in, bufferReceived, bufferReceived.Length, out bytesReceived);
+
+            if (result == false) throw (new Exception("Error while receiving raw response."));
+            if (bytesReceived != bufferReceived.Length) throw (new Exception("Invalid number of bytes received: " + bytesReceived.ToString() + "."));
+        }
+
+        public void ReceiveRawControl(byte bRequest, ref byte[] bufferReceived)
+        {
+            if (!connected) throw (new Exception("Device disconnected."));
+
+            int bytesReceived = 0;
+            UsbSetupPacket setup_in = new UsbSetupPacket((byte)(USB_TYPE_VENDOR | USB_RECIP_INTERFACE | USB_DIR_IN), bRequest, 0, 0, (short)bufferReceived.Length);
+            bool result = device.ControlTransfer(ref setup_in, bufferReceived, bufferReceived.Length, out bytesReceived);
+
+            if (result == false) throw (new Exception("Error while receiving raw response."));
+            if (bytesReceived != bufferReceived.Length) throw (new Exception("Invalid number of bytes received: " + bytesReceived.ToString() + "."));
+        }
+
         public void Ping()
         {
             if (!connected) throw (new Exception("Device disconnected."));
@@ -53,7 +96,7 @@ namespace small_impedance_meter
             if (!connected) throw (new Exception("Device disconnected."));
 
             int bytesSent = 0;
-            byte[] bufferSent = {};
+            byte[] bufferSent = { 0 };
             UsbSetupPacket setup_out = new UsbSetupPacket((byte)(USB_TYPE_VENDOR | USB_RECIP_INTERFACE | USB_DIR_OUT), (byte)RequestType.Powerdown, 0, 0, (short)bufferSent.Length);
             bool result = device.ControlTransfer(ref setup_out, bufferSent, bufferSent.Length, out bytesSent);
 

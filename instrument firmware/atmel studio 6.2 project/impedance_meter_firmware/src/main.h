@@ -71,16 +71,8 @@ void main_suspend_action(void);
  */
 void main_resume_action(void);
 
-/*! \brief Manage the reception of setup request OUT
- *
- * \retval true if request accepted
- */
-bool main_setup_out_received(void);
+void main_vendor_bulk_in_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep);
 
-/*! \brief Manage the reception of setup request IN
- *
- * \retval true if request accepted
- */
-bool main_setup_in_received(void);
+void main_vendor_bulk_out_received(udd_ep_status_t status, iram_size_t nb_transfered, udd_ep_id_t ep);
 
 #endif // _MAIN_H_

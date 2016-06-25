@@ -9,7 +9,7 @@
 #ifndef AD5933_H_
 #define AD5933_H_
 
-#define TWI_AD5933_BUS_ADDR 0x50 //!< AD5933 TWI slave bus address
+#define TWI_AD5933_BUS_ADDR 0x0D //!< AD5933 TWI slave bus address
 
 //!< AD5933 registers address definitions
 #define AD5933_ADDR_CTRL_HIGH 0x80 			//RW 2 bytes

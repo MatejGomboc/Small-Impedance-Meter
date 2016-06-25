@@ -72,7 +72,7 @@ src/ui.d src/ui.o: ../src/ui.c ../src/asf.h \
  ../src/ASF/common/services/usb/udc/udi.h \
  ../src/ASF/common/services/usb/udc/udc_desc.h \
  ../src/ASF/common/services/usb/udc/udi.h ../src/ui.h ../src/main.h \
- ../src/ASF/common/services/usb/udc/udd.h \
+ ../src/usb_control.h ../src/ASF/common/services/usb/udc/udd.h \
  ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.h \
  ../src/led.h ../src/ui.h
 
@@ -243,6 +243,8 @@ d:\program\ files\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-tool
 ../src/ui.h:
 
 ../src/main.h:
+
+../src/usb_control.h:
 
 ../src/ASF/common/services/usb/udc/udd.h:
 

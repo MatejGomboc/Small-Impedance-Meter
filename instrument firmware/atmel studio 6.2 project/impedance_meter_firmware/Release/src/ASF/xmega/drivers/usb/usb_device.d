@@ -40,7 +40,8 @@ src/ASF/xmega/drivers/usb/usb_device.d \
  ../src/ASF/common/services/usb/udc/udi.h \
  ../src/ASF/common/services/usb/udc/udc_desc.h \
  ../src/ASF/common/services/usb/udc/udi.h ../src/ui.h ../src/main.h \
- ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
+ ../src/usb_control.h ../src/ASF/common/services/clock/sysclk.h \
+ ../src/config/conf_clock.h \
  ../src/ASF/common/services/clock/xmega/sysclk.h \
  ../src/ASF/common/boards/board.h \
  ../src/ASF/common/boards/user_board/user_board.h \
@@ -140,6 +141,8 @@ d:\program\ files\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-tool
 ../src/ui.h:
 
 ../src/main.h:
+
+../src/usb_control.h:
 
 ../src/ASF/common/services/clock/sysclk.h:
 

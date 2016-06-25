@@ -94,5 +94,5 @@ void ui_process(uint16_t framenumber)
  * Human interface on STK600:
  * - Led RED is on when USB line is in IDLE mode, and off in SUSPEND mode
  * - Led GREEN blinks when USB host has checked and enabled vendor interface
- * - Led BLUE is on when loopback is running
+ * - Led BLUE is on when app communication is running
  */

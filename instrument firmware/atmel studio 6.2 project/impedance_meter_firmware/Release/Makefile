@@ -75,6 +75,7 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../src/usb_control.c \
 ../src/AD5933.c \
 ../src/ASF/common/services/usb/class/vendor/device/udi_vendor.c \
 ../src/ASF/common/services/usb/udc/udc.c \
@@ -103,6 +104,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+src/usb_control.o \
 src/AD5933.o \
 src/ASF/common/services/usb/class/vendor/device/udi_vendor.o \
 src/ASF/common/services/usb/udc/udc.o \
@@ -124,6 +126,7 @@ src/ASF/xmega/drivers/cpu/ccp.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
+src/usb_control.o \
 src/AD5933.o \
 src/ASF/common/services/usb/class/vendor/device/udi_vendor.o \
 src/ASF/common/services/usb/udc/udc.o \
@@ -145,6 +148,7 @@ src/ASF/xmega/drivers/cpu/ccp.o \
 src/main.o
 
 C_DEPS +=  \
+src/usb_control.d \
 src/AD5933.d \
 src/ASF/common/services/usb/class/vendor/device/udi_vendor.d \
 src/ASF/common/services/usb/udc/udc.d \
@@ -166,6 +170,7 @@ src/ASF/xmega/drivers/cpu/ccp.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
+src/usb_control.d \
 src/AD5933.d \
 src/ASF/common/services/usb/class/vendor/device/udi_vendor.d \
 src/ASF/common/services/usb/udc/udc.d \
@@ -197,6 +202,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
