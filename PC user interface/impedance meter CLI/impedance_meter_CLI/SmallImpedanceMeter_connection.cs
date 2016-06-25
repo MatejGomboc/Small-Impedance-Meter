@@ -8,14 +8,24 @@ using LibUsbDotNet.DeviceNotify;
 
 namespace small_impedance_meter
 {
-    public class SmallImpedanceMeter
+    public partial class SmallImpedanceMeter
     {
-        private const int VID = 0x03EB;
-        private const int PID = 0x2423;
-        private const string Serial = "1.0";
+        public const int VID = 0x03EB;
+        public const int PID = 0x2423;
+        public const string SerialString = "1.0";
+        public const int SerialNum = 0100;
 
         private UsbDevice device = null;
         private UsbDeviceFinder usbFinder = null;
+        private bool connected = false;
+
+        public bool IsConnected
+        {
+            get
+            {
+                return connected;
+            }
+        }
 
         public delegate void DeviceChangedEventHandler(object sender, EventArgs e);
 
@@ -29,7 +39,7 @@ namespace small_impedance_meter
             UsbDeviceNotifier = DeviceNotifier.OpenDeviceNotifier(); // Enable the device notifier
             UsbDeviceNotifier.OnDeviceNotify += OnDeviceNotifyEvent; // Hook the device notifier event
 
-            usbFinder = new UsbDeviceFinder(0x03EB, 0x2423, 0100);
+            usbFinder = new UsbDeviceFinder(VID, PID, SerialNum);
         }
 
         ~SmallImpedanceMeter()
@@ -47,7 +57,7 @@ namespace small_impedance_meter
         {
             // A Device system-level event has occured
 
-            if ((e.Device.IdVendor == VID) && (e.Device.IdProduct == PID) && (e.Device.SerialNumber == Serial))
+            if ((e.Device.IdVendor == VID) && (e.Device.IdProduct == PID) && (e.Device.SerialNumber == SerialString))
             {
                 if (e.EventType == EventType.DeviceArrival)
                 {
@@ -90,11 +100,7 @@ namespace small_impedance_meter
                     wholeUsbDevice.SetAltInterface(1);
                 }
 
-                // open read endpoint 1.
-                UsbEndpointReader reader = device.OpenEndpointReader(ReadEndpointID.Ep01);
-
-                // open write endpoint 1.
-                UsbEndpointWriter writer = device.OpenEndpointWriter(WriteEndpointID.Ep02);
+                connected = true;
             }
             catch(Exception)
             {
@@ -129,6 +135,8 @@ namespace small_impedance_meter
 
                 // Free usb resources
                 UsbDevice.Exit();
+
+                connected = false;
             }
         }
     }

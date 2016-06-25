@@ -47,7 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SmallImpedanceMeter.cs" />
+    <Compile Include="SmallImpedanceMeter_communication.cs" />
+    <Compile Include="SmallImpedanceMeter_connection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
