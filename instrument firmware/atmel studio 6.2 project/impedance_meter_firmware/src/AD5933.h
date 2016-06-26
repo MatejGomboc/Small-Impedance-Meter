@@ -86,9 +86,9 @@ extern bool AD5933_ctrl_start_measure_temp(void);
 extern bool AD5933_ctrl_powedown(void);
 extern bool AD5933_ctrl_standby(void);
 extern bool AD5933_ctrl_select_Vout_range(uint8_t setting);
-extern bool AD5933_ctrl_set_PGA_gain(bool setting);
+extern bool AD5933_ctrl_set_PGA_gain(uint8_t setting);
 extern bool AD5933_ctrl_reset_part(void);
-extern bool AD5933_ctrl_select_mclk(bool setting);
+extern bool AD5933_ctrl_select_mclk(uint8_t setting);
 
 extern bool AD5933_set_start_freq(uint8_t* freq_data);
 extern bool AD5933_get_start_freq(uint8_t* freq_data);
@@ -106,9 +106,9 @@ extern bool AD5933_get_temp(uint8_t* temp_data);
 extern bool AD5933_get_real(uint8_t* real_data);
 extern bool AD5933_get_imag(uint8_t* imag_data);
 
-extern bool AD5933_check_valid_temp(bool* status);
-extern bool AD5933_check_sweep_complete(bool* status);
-extern bool AD5933_check_valid_data(bool* status);
+extern bool AD5933_check_valid_temp(uint8_t* status);
+extern bool AD5933_check_sweep_complete(uint8_t* status);
+extern bool AD5933_check_valid_data(uint8_t* status);
 
 extern bool AD5933_measure_temp(uint8_t* temp_data);
 

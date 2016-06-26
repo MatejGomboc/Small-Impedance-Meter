@@ -249,24 +249,24 @@ bool AD5933_ctrl_select_Vout_range(uint8_t setting)
 	return AD5933_reg_write(AD5933_ADDR_CTRL_HIGH, ctrl_reg);
 }
 
-bool AD5933_ctrl_set_PGA_gain(bool setting)
+bool AD5933_ctrl_set_PGA_gain(uint8_t setting)
 {
 	uint8_t ctrl_reg = 0x00;
 	
 	if(!AD5933_reg_read(AD5933_ADDR_CTRL_HIGH, &ctrl_reg)) return false;
 	
-	ctrl_reg |= ((uint8_t)setting << AD5933_CTRL_POS_PGA_GAIN);
+	ctrl_reg |= (setting << AD5933_CTRL_POS_PGA_GAIN);
 	
 	return AD5933_reg_write(AD5933_ADDR_CTRL_HIGH, ctrl_reg);
 }
 
-bool AD5933_ctrl_select_mclk(bool setting)
+bool AD5933_ctrl_select_mclk(uint8_t setting)
 {
 	uint8_t ctrl_reg = 0x00;
 	
 	if(!AD5933_reg_read(AD5933_ADDR_CTRL_LOW, &ctrl_reg)) return false;
 	
-	ctrl_reg |= ((uint8_t)setting << AD5933_CTRL_POS_MCLK_SEL);
+	ctrl_reg |= (setting << AD5933_CTRL_POS_MCLK_SEL);
 	
 	return AD5933_reg_write(AD5933_ADDR_CTRL_LOW, ctrl_reg);
 }
@@ -376,38 +376,38 @@ bool AD5933_get_imag(uint8_t* imag_data)
 }
 
 
-bool AD5933_check_valid_temp(bool* status)
+bool AD5933_check_valid_temp(uint8_t* status)
 {
 	uint8_t status_reg = 0x00;
 	
 	if(!AD5933_reg_read(AD5933_ADDR_STATUS, &status_reg)) return false;
 	
-	if(((status_reg >> AD5933_STAT_POS_TEMP) & 0x01) == 0x01) *status = true;
-	else *status = false;
+	if(((status_reg >> AD5933_STAT_POS_TEMP) & 0x01) == 0x01) *status = 1;
+	else *status = 0;
 	
 	return true;
 }
 
-bool AD5933_check_sweep_complete(bool* status)
+bool AD5933_check_sweep_complete(uint8_t* status)
 {
 	uint8_t status_reg = 0x00;
 	
 	if(!AD5933_reg_read(AD5933_ADDR_STATUS, &status_reg)) return false;
 	
-	if(((status_reg >> AD5933_STAT_POS_FREQ_SWEEP_COMPLETE) & 0x01) == 0x01) *status = true;
-	else *status = false;
+	if(((status_reg >> AD5933_STAT_POS_FREQ_SWEEP_COMPLETE) & 0x01) == 0x01) *status = 1;
+	else *status = 0;
 	
 	return true;
 }
 
-bool AD5933_check_valid_data(bool* status)
+bool AD5933_check_valid_data(uint8_t* status)
 {
 	uint8_t status_reg = 0x00;
 	
 	if(!AD5933_reg_read(AD5933_ADDR_STATUS, &status_reg)) return false;
 	
-	if(((status_reg >> AD5933_STAT_POS_RE_IM_DATA) & 0x01) == 0x01) *status = true;
-	else *status = false;
+	if(((status_reg >> AD5933_STAT_POS_RE_IM_DATA) & 0x01) == 0x01) *status = 1;
+	else *status = 0;
 	
 	return true;
 }
@@ -417,8 +417,8 @@ bool AD5933_measure_temp(uint8_t* temp_data)
 {	
 	if(!AD5933_ctrl_start_measure_temp()) return false;
 	
-	bool status = false;
-	while(status == false)
+	uint8_t status = 0;
+	while(status == 0)
 	{
 		if(!AD5933_check_valid_temp(&status)) return false;
 	}
