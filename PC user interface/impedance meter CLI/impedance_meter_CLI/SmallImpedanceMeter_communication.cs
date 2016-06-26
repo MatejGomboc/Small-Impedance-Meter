@@ -709,12 +709,38 @@ namespace small_impedance_meter
             }
         }
 
-        public void AD5933_SetNumOfSettlingCycles(int numOfSettlingCycles)
+        public uint AD5933_SetNumOfSettlingCycles(uint numOfSettlingCycles)
         {
             try
             {
-                byte[] bufferSent = { (byte)((numOfIncrements & 0xFF00) >> 8),
-                                      (byte)(numOfIncrements & 0x00FF) };
+                UInt16 setting = 0;
+                byte settlingCyclesMultiplier = 0;
+                uint sentValue = 0;
+
+                if ((numOfSettlingCycles > 0) && (numOfSettlingCycles <= 511))
+                {
+                    settlingCyclesMultiplier = 0x00;
+                    sentValue = numOfSettlingCycles;
+                    setting = (UInt16)sentValue;
+                }
+                else if ((numOfSettlingCycles > 511) && (numOfSettlingCycles <= 1022))
+                {
+                    settlingCyclesMultiplier = 0x02;
+                    decimal fractional = (decimal)numOfSettlingCycles / (decimal)2;
+                    setting = (UInt16)(Math.Round(fractional, MidpointRounding.AwayFromZero));
+                    sentValue = (uint)setting * 2;
+                }
+                else if ((numOfSettlingCycles > 1022) && (numOfSettlingCycles <= 2044))
+                {
+                    settlingCyclesMultiplier = 0x03;
+                    decimal fractional = (decimal)numOfSettlingCycles / (decimal)4;
+                    setting = (UInt16)(Math.Round(fractional, MidpointRounding.AwayFromZero));
+                    sentValue = (uint)setting * 4;
+                }
+                else throw (new ArgumentOutOfRangeException("Num of settling cycles out of range."));
+
+                byte[] bufferSent = { (byte)(((byte)((setting & 0x0100) >> 8)) | ((byte)((settlingCyclesMultiplier & 0x03) << 1))),
+                                      (byte)(setting & 0x00FF) };
 
                 SendRawControl((byte)ControlRequestType.AD5933_SetNumOfSettlingCycles, bufferSent);
 
@@ -723,6 +749,8 @@ namespace small_impedance_meter
                 ReceiveRawControl((byte)ControlRequestType.AD5933_SetNumOfSettlingCycles, ref bufferReceived);
 
                 if (bufferReceived[0] != 1) throw (new Exception("AD5933 set number of settling cycles failed."));
+
+                return sentValue;
             }
             catch (Exception ex)
             {
@@ -730,7 +758,7 @@ namespace small_impedance_meter
             }
         }
 
-        public int AD5933_GetNumOfSettlingCycles()
+        public uint AD5933_GetNumOfSettlingCycles()
         {
             try
             {
@@ -744,7 +772,7 @@ namespace small_impedance_meter
 
                 if (bufferReceived[0] != 1) throw (new Exception("AD5933 get number of settling cycles failed."));
 
-                int numOfSettlingCycles = (UInt16)((UInt16)((((UInt16)bufferReceived[1]) & 0x01) << 8) | ((UInt16)bufferReceived[2]));
+                uint numOfSettlingCycles = (UInt16)((UInt16)((((UInt16)bufferReceived[1]) & 0x01) << 8) | ((UInt16)bufferReceived[2]));
 
                 byte settlingCyclesMultiplier = (byte)((byte)((byte)(bufferReceived[1] & 0x07) >> 1) & 0x03);
 
@@ -763,6 +791,168 @@ namespace small_impedance_meter
             catch (Exception ex)
             {
                 throw new Exception("AD5933 get number of settling cycles error.", ex);
+            }
+        }
+
+        public UInt16 AD5933_GetTemp()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_GetTemp, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_GetTemp, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 get temperature failed."));
+
+                UInt16 temperatureWord = (UInt16)((((UInt16)bufferReceived[1]) << 8) | ((UInt16)bufferReceived[2]));
+
+                return temperatureWord;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 get temperature error.", ex);
+            }
+        }
+
+        public UInt16 AD5933_GetRealValue()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_GetReal, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_GetReal, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 get real value failed."));
+
+                UInt16 realValue = (UInt16)((((UInt16)bufferReceived[1]) << 8) | ((UInt16)bufferReceived[2]));
+
+                return realValue;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 get real value error.", ex);
+            }
+        }
+
+        public UInt16 AD5933_GetImaginaryValue()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_GetImaginary, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_GetImaginary, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 get imaginary value failed."));
+
+                UInt16 imaginaryValue = (UInt16)((((UInt16)bufferReceived[1]) << 8) | ((UInt16)bufferReceived[2]));
+
+                return imaginaryValue;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 get imaginary value error.", ex);
+            }
+        }
+
+        public bool AD5933_CheckValidTemp()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_CheckValidTemp, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_CheckValidTemp, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 check valid temperature failed."));
+
+                return Convert.ToBoolean(bufferReceived[1]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 check valid temperature error.", ex);
+            }
+        }
+
+        public bool AD5933_CheckFrequencySweepComplete()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_CheckSweepComplete, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_CheckSweepComplete, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 check frequency sweep complete failed."));
+
+                return Convert.ToBoolean(bufferReceived[1]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 check frequency sweep complete error.", ex);
+            }
+        }
+
+        public bool AD5933_CheckValidData()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_CheckValidData, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_CheckValidData, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 check valid data failed."));
+
+                return Convert.ToBoolean(bufferReceived[1]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 check valid data error.", ex);
+            }
+        }
+
+        public UInt16 AD5933_MeasureTemp()
+        {
+            try
+            {
+                byte[] bufferSent = { 0 };
+
+                SendRawControl((byte)ControlRequestType.AD5933_MeasureTemp, bufferSent);
+
+                byte[] bufferReceived = { 0, 0, 0 };
+
+                ReceiveRawControl((byte)ControlRequestType.AD5933_MeasureTemp, ref bufferReceived);
+
+                if (bufferReceived[0] != 1) throw (new Exception("AD5933 measure temperature failed."));
+
+                UInt16 temperatureWord = (UInt16)((((UInt16)bufferReceived[1]) << 8) | ((UInt16)bufferReceived[2]));
+
+                return temperatureWord;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AD5933 measure temperature error.", ex);
             }
         }
     }
