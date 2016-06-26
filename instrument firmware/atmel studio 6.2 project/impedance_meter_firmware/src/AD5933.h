@@ -59,7 +59,7 @@
 #define AD5933_VOUT_RANGE_400mVpp 0x02
 #define AD5933_VOUT_RANGE_1Vpp 0x03
 
-//!< AD5933 Vout range
+//!< AD5933 PGA gain
 #define AD5933_PGA_GAIN_X5 0
 #define AD5933_PGA_GAIN_X1 1
 

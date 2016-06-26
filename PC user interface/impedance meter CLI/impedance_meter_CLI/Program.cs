@@ -29,7 +29,7 @@ namespace impedance_meter_CLI
             while (!Console.KeyAvailable) Application.DoEvents();
 
             smallImpedanceMeter.Ping();
-            smallImpedanceMeter.Powerdown();
+            smallImpedanceMeter.AD5933_Powerdown();
             smallImpedanceMeter.SetClockDivider(0x00);
 
             smallImpedanceMeter.Disconnect();

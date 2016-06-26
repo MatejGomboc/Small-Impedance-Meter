@@ -2,12 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
 using LibUsbDotNet.DeviceNotify;
 
 namespace small_impedance_meter
 {
+    public class DeviceNotFoundException : Exception, ISerializable
+    {
+        public DeviceNotFoundException() : base() { }
+
+        public DeviceNotFoundException(string message) : base(message) { }
+
+        public DeviceNotFoundException(string message, Exception innerException) : base(message, innerException) { }
+
+        // This constructor is needed for serialization.
+        protected DeviceNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
+
+    public delegate void DeviceChangedEventHandler(object sender, EventArgs e);
+
     public partial class SmallImpedanceMeter
     {
         public const int VID = 0x03EB;
@@ -26,8 +41,6 @@ namespace small_impedance_meter
                 return connected;
             }
         }
-
-        public delegate void DeviceChangedEventHandler(object sender, EventArgs e);
 
         public event DeviceChangedEventHandler OnDeviceAttached;
         public event DeviceChangedEventHandler OnDeviceRemoved;
@@ -80,7 +93,7 @@ namespace small_impedance_meter
                 device = UsbDevice.OpenUsbDevice(usbFinder);
 
                 // If the device is open and ready
-                if (device == null) throw new Exception("Device Not Found.");
+                if (device == null) throw new DeviceNotFoundException("Device Not Found.");
 
                 // If this is a "whole" usb device (libusb-win32, linux libusb)
                 // it will have an IUsbDevice interface. If not (WinUSB) the 
