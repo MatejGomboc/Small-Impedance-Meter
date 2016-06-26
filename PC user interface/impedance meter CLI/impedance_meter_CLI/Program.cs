@@ -28,9 +28,37 @@ namespace impedance_meter_CLI
 
             while (!Console.KeyAvailable) Application.DoEvents();
 
-            smallImpedanceMeter.Ping();
-            smallImpedanceMeter.AD5933_Powerdown();
-            smallImpedanceMeter.SetClockDivider(0x00);
+            try
+            {
+                smallImpedanceMeter.AD5933_CheckFrequencySweepComplete();
+                smallImpedanceMeter.AD5933_CheckValidData();
+                smallImpedanceMeter.AD5933_CheckValidTemp();
+                smallImpedanceMeter.AD5933_GetFreqIncrement();
+                smallImpedanceMeter.AD5933_GetImaginaryValue();
+                smallImpedanceMeter.AD5933_GetNumOfIncrements();
+                smallImpedanceMeter.AD5933_GetNumOfSettlingCycles();
+                smallImpedanceMeter.AD5933_GetRealValue();
+                smallImpedanceMeter.AD5933_GetStartFreq();
+                smallImpedanceMeter.AD5933_GetTemp();
+                smallImpedanceMeter.AD5933_IncrementFreq();
+                smallImpedanceMeter.AD5933_Init();
+                smallImpedanceMeter.AD5933_InitWithStartFreq();
+                smallImpedanceMeter.AD5933_Powerdown();
+                smallImpedanceMeter.AD5933_RepeatFreq();
+                smallImpedanceMeter.AD5933_Reset();
+                smallImpedanceMeter.AD5933_Standby();
+                smallImpedanceMeter.SetToCalibrate();
+                smallImpedanceMeter.SetToMeasure();
+                smallImpedanceMeter.Ping();
+                smallImpedanceMeter.InitClockDivider();
+                
+
+                //smallImpedanceMeter.AD5933_MeasureTemp();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             smallImpedanceMeter.Disconnect();
 

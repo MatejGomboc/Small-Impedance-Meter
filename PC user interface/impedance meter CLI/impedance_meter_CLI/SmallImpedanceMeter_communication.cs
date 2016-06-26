@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using System.Threading;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
 using LibUsbDotNet.DeviceNotify;
@@ -131,16 +132,17 @@ namespace small_impedance_meter
         {
             try
             {
-                byte[] bufferSent = { 1, 2, 3, 4, 5 };
+                byte[] bufferSent = { 1, 2, 3, 4 };
 
                 SendRawControl((byte)ControlRequestType.Ping, bufferSent);
 
-                byte[] bufferReceived = { 0, 0, 0, 0, 0 };
+                byte[] bufferReceived = { 0, 0, 0, 0 };
 
                 ReceiveRawControl((byte)ControlRequestType.Ping, ref bufferReceived);
 
                 for (int i = 0; i < bufferReceived.Length; i++)
                 {
+                    //Console.WriteLine(bufferReceived[i] + " " + bufferSent[i]);
                     if (bufferReceived[i] != bufferSent[i]) throw (new DataLengthException("Received bytes not equal to sent bytes."));
                 }
             }
